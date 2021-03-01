@@ -1,0 +1,68 @@
+// ==UserScript==
+// @name     SCP-Reader
+// @version  1
+// @grant    none
+
+// Further work:
+// - Make images show up. [DONE]
+// - Debug implementation. [ONGOING]
+// - Align to Center. [DONE]
+// - Compatibility with footnotes.
+// - AutoScroll to bottom when hit enter. [DONE]
+// - Animate display of HTML nodes.
+// - A dynamic console to issue commands to navigate site.
+// - Compatibility with "special" pages.
+// - A way to "start over".
+// - Show how far you are through the article (ie "2/22", etc.)
+// - Reveal images more slowly.
+
+var dadBod = document.getElementsByTagName("body");
+var bod = document.createElement("body");
+var title = document.getElementById("page-title");
+var content = document.getElementById("page-content");
+var groot = document.getElementsByTagName("html");
+
+ct = 0;
+i = 0;
+
+groot[0].innerHTML = "";
+
+bod.style.color = "#00ff00";
+bod.style.backgroundColor = "black";
+bod.style.fontFamily = "Lucida Console";
+
+dadBod[0].remove();
+groot[0].appendChild(bod);
+
+document.addEventListener("keypress", function(event) {
+  if (event.keyCode == 13) {
+  	var kid = content.children[ct]
+  	var dum = document.createElement(kid.nodeName);
+  	dum.innerHTML = kid.innerHTML
+    dum.style.width = "33%";
+    dum.style.marginLeft = "auto";
+    dum.style.marginRight = "auto";
+    dum.style.textAlign = "justify";
+    bod.appendChild(dum);
+    ct++;
+    window.scrollTo(0,document.body.scrollHeight);
+    i=0;
+    //typeWriter(dum);
+  }
+});
+
+
+/*
+speed = 50;
+
+function typeWriter(n) {
+  var txt = n.textContent;
+  if (i < txt.length) {
+    n.innerText += txt.charAt(i);
+    i++;
+    setTimeout(function(){typeWriter(n)}, speed);
+  }
+  //else {break;}
+}
+
+// ==/UserScript==
